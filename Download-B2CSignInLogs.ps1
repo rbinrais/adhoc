@@ -88,8 +88,6 @@ Write-Output "-----------------------------------------"
 # Tenant: yourtenant.onmicrosoft.com  
 # Logs Date: 2020-07-22  
 # -----------------------------------------
-# Connecting to Uri ==> https://graph.microsoft.com/beta/auditLogs/signIns?&$filter=
-# createdDateTime ge 2020-07-22 and createdDateTime le 2020-07-23
 # Saving logs to a file ==> Z:\Desktop\certs\signinlogs0.json
 # -----------------------------------------
 
