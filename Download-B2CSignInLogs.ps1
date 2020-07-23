@@ -1,4 +1,4 @@
-﻿ # This script requires an application registration that's granted Microsoft Graph API permission
+ #This script requires an application registration that's granted Microsoft Graph API permission
 # https://docs.microsoft.com/azure/active-directory-b2c/microsoft-graph-get-started
 
 # NOTE: Application requires GraphAPI permission --> https://graph.microsoft.com/AuditLog.Read.All
@@ -34,9 +34,10 @@ $startDateStr = $startDate.ToString("yyyy-MM-dd")
 $endDate = $startDate.AddDays(1)
 $endDateStr = $endDate.ToString("yyyy-MM-dd")
 
-Write-Output "-----------------------------------------"
-Write-Output "Downloading signin logs for $startDateStr"
-Write-Output "-----------------------------------------"
+Write-Output "----------------------------------------------------"
+Write-Output "Tenant: $tenantdomain  "
+Write-Output "Logs Date: $startDateStr  "
+Write-Output "----------------------------------------------------"
 
 
 # Create HTTP header, get an OAuth2 access token based on client id, secret and tenant domain
