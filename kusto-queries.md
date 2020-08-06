@@ -10,6 +10,7 @@ Complete the one time setup following the instructions available [here](https://
 ## Logs Schema
 
 * SignIn Logs: https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-azure-monitor-sign-ins-log-schema
+* Audit Logs: https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-azure-monitor-audit-log-schema
 
 ```
 { 
