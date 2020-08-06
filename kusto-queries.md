@@ -24,7 +24,7 @@ To create a new report, frist navigate to the resource group that you have creat
 * You are now ready to create your first report. The reports are authored in Kusto query langauge [Kusto](). All queries provides here are fully functional and do not requiere you to have prior knownledge of Kusto. 
 
 
-* <b> Failed User Signins</b> : This query list failed user signins for the past 30 days.
+* <b> Failed User Signins: </b> : This query list failed user signins for the past 30 days.
 
 ```
 let duration = ago(90d);
@@ -40,7 +40,7 @@ SigninLogs
 ```
 
 
-* <b> Requets Per IP Address </b> This query list IP Addresses along with the number of requests send by them in the past 30 days.
+* <b> Requets Per IP Address: </b> This query list IP Addresses along with the number of requests send by them in the past 30 days.
 ```
 SigninLogs
 | where TimeGenerated >= ago(180d)
@@ -80,13 +80,22 @@ AuditLogs
 | render table             
 ```
 
-* <b> Failed User Signins </b> : This query displays list of policies called and issued a token .
+* <b> Failed User Signins: </b> : This query displays list of policies called and issued a token .
 
 ```
 SigninLogs
 | where ResultType !~ "0" 
 | summarize  by UserPrincipalName, ResultDescription, ResultType, tostring( DeviceDetail), IPAddress
 | sort by ResultType asc         
+```
+
+* <b> Signins by Location: </b> This query displays list of signins by location in the past 30 days.
+```
+let duration = ago(30);
+SigninLogs
+| where TimeGenerated  >= duration
+| where AppDisplayName != ""
+| summarize signInCount = count() by Location
 ```
 
 ## Alerts
