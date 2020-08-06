@@ -53,7 +53,7 @@ SigninLogs
 | sort by signInCount desc       
 ```
 
-* <b> B2C Policy Usage</b> This query list policy usage in the past 30 days.
+* <b> B2C Policy Usage</b> This query list policy usage based on token issued in the past 30 days.
 ```
 let duration = ago(30d);
 AuditLogs 
@@ -66,19 +66,6 @@ AuditLogs
 | render table        
 ```
 
-* <b> B2C policies and token issued count</b> : This query displays list of policies called and issued a token .
-
-```
-let duration = ago(180d);
-AuditLogs 
-| where TimeGenerated  > duration
-| where OperationName contains "issue"
-| extend  UserId=extractjson("$.[0].id",tostring(TargetResources))
-| extend Policy=extractjson("$.[1].value",tostring(AdditionalDetails))
-| summarize Token_Issued_Count = count() by Policy
-| order by Token_Issued_Count desc  nulls last 
-| render table             
-```
 
 * <b> Failed User Signins: </b> : This query displays list of policies called and issued a token .
 
@@ -91,11 +78,25 @@ SigninLogs
 
 * <b> Signins by Location: </b> This query displays list of signins by location in the past 30 days.
 ```
-let duration = ago(30);
+let duration = ago(30d);
 SigninLogs
 | where TimeGenerated  >= duration
 | where AppDisplayName != ""
 | summarize signInCount = count() by Location
+```
+
+* <b> Signins Per Browser: </b> This query displays list of signins per browser agent in the past 30 days.
+
+```
+let duration = ago(30d);
+SigninLogs
+|where TimeGenerated  > duration
+|extend OS= DeviceDetail.operatingSystem
+|extend Browser =extract("([a-zA-Z]+)",1,tostring(DeviceDetail.browser))
+|where OS!=""
+|where Browser !=""
+|where AppDisplayName !=""
+|summarize signInCount = count() by Browser
 ```
 
 ## Alerts
