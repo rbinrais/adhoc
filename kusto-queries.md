@@ -28,9 +28,9 @@ To create a new report, frist navigate to the resource group that you have creat
 * <b> Failed User Signins</b> : This query displays all the failes Signins by users in the past 30 days.
 
 ```
-let duration = ago(30d);
+let duration = ago(90d);
 SigninLogs
-| where TimeGenerated >= ago(90d)
+| where TimeGenerated >= duration
 | extend OS= DeviceDetail.operatingSystem
 | extend Browser =extract("([a-zA-Z]+)",1,tostring(DeviceDetail.browser))
 | where OS!=""
@@ -40,19 +40,19 @@ SigninLogs
 | sort by CreatedDateTime asc  
 ```
 
-* <b> Failed User Signins</b> : This query displays all the failes Signins by users in the past 30 days.
+* <b> Failed User Signins</b> : This query list failed user signins for the past 30 days.
 
 ```
-let duration = ago(30d);
+let duration = ago(90d);
 SigninLogs
-| where TimeGenerated >= ago(90d)
+| where TimeGenerated >= duration
 | extend OS= DeviceDetail.operatingSystem
 | extend Browser =extract("([a-zA-Z]+)",1,tostring(DeviceDetail.browser))
 | where OS!=""
 | where Browser !=""
 | where ResultType !~ "0" 
-| summarize  by UserPrincipalName, ResultDescription, tostring(OS), tostring(Browser), IPAddress, CreatedDateTime
-| sort by CreatedDateTime asc  
+| summarize  by UserPrincipalName, ResultDescription, tostring(OS), tostring(Browser), IPAddress, TimeGenerated
+| sort by TimeGenerated asc   
 ```
 
 * <b> B2C policies and token issued count</b> : This query displays list of policies called and issued a token .
